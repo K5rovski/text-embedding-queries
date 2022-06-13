@@ -1,0 +1,24 @@
+{
+   "mappings": {
+    "dynamic": "true",
+    "_source": {
+      "enabled": "true"
+    },
+    "properties": {
+
+      "text": {
+        "type": "text"
+      },
+      "main_header": {
+        "type": "text"
+      },
+      "glocal_header": {
+        "type": "text"
+      },
+      "text_vector": {
+        "type": "dense_vector",
+        "dims": 512
+      }
+    }
+  }
+}
