@@ -116,4 +116,5 @@ if __name__ == '__main__':
     pass
     with open('data/aws/links.txt', 'r') as f:
         links = f.read().splitlines()
+    raise Exception('Wrong format links ...')
     make_combined_html_doc(links)
