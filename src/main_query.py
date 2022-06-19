@@ -97,7 +97,7 @@ def embed_text(text):
 
 ####### Going Through topics #######
 
-def search_collection_topic():
+def search_collection_topic(do_save_csv=False):
     all_aws_services = [
         "firehose|streams|analytics|sqs|sns|mq|dms|" \
         "directconnect|kafka|snowball|datapipeline|datasync|lambda",
@@ -271,12 +271,13 @@ transform and filter data while ingesting|filter transform data in collecting|ï‚
         best_score_ind = np.argmax(rec['score'])
         rec['best_rated_subtopic'] = rec['query'][best_score_ind].strip()
 
-    example_record = rec
-    with open('aws_es_collection_links.csv', 'w') as f:
-        w = csv.DictWriter(f, example_record.keys())
-        w.writeheader()
-        for rr in rec_list:
-            w.writerow(rr)
+    if do_save_csv:
+        example_record = rec
+        with open('aws_es_collection_links.csv', 'w') as f:
+            w = csv.DictWriter(f, example_record.keys())
+            w.writeheader()
+            for rr in rec_list:
+                w.writerow(rr)
 
     top_recs = rec_list[:1000].copy()
     top_recs.sort(key=lambda x: (x['aws_service'], -x['norm_score'])  )
