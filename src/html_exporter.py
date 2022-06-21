@@ -1,4 +1,5 @@
 import os
+import re
 
 import bs4
 import requests
@@ -7,6 +8,7 @@ from bs4 import BeautifulSoup
 
 def coll_container(soup, title, childs):
     new_tag = soup.new_tag("div")
+    new_tag.attrs['class'] = 'padded'
     button = soup.new_tag('button', type="button")
     button.attrs['class'] = "collapsible"
     button.string = title
@@ -56,6 +58,8 @@ def parse_higlighted_doc(link, content_save, service, topic):
         with open(file_name_cache, 'r') as f:
             text = f.read()
 
+    text = re.sub('href="./', f'href="{link[:link.rindex("/")+1]}', text)
+    text = re.sub('src="((?!http)\w+)/', fr'src="{link[:link.rindex("/")+1]}\1/', text)
 
     soup = BeautifulSoup(text, 'html.parser')
 
