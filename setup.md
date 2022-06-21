@@ -47,8 +47,8 @@ The json crawled files are currently located also in the **workspace/** folder.
 
 # The frontend output
 
-the output now is stored inside **data/aws** folder. 
+the output now is stored inside **data/aws** folder.
 
-the file is called scrolled_conts.html,
+the file is called **scrolled_conts.html**,
 to use the file some css files are needed, not inline,
 they are in the same folder.
