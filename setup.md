@@ -43,3 +43,12 @@ This script should produce a html file inside **data/aws** with the crawled and 
 
 The docs where crawled using a jupyter lab notebook, located inside **workspace/**.
 The json crawled files are currently located also in the **workspace/** folder.
+
+
+# The frontend output
+
+the output now is stored inside **data/aws** folder. 
+
+the file is called scrolled_conts.html,
+to use the file some css files are needed, not inline,
+they are in the same folder.

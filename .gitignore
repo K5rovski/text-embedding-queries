@@ -1,5 +1,5 @@
 .DS_Store
 .idea
 __pycache__/
-data/aws/
+data/aws/links
 data/posts/
