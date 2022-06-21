@@ -1,4 +1,5 @@
 import json
+import sys
 import time
 import uuid
 from itertools import chain
@@ -18,7 +19,7 @@ import re
 from elasticsearch.helpers import BulkIndexError
 
 ##### INDEXING #####
-from src.config import serviceD, guideD, keys
+from src.config import serviceD, guideD, keys, model_path
 
 url_mask = lambda service, typ: f'https://docs.aws.amazon.com/{service}/latest/{typ}'
 
@@ -47,7 +48,7 @@ def get_start_url(key):
 
     return url_use
 
-def index_texts(es):
+def index_texts(json_path, es):
     print("Creating the 'docs' index.")
     client.indices.delete(index=INDEX_NAME, ignore=[404])
 
@@ -69,7 +70,7 @@ def index_texts(es):
         service = serviceD[service]
         guidename = guideD[guidename]
 
-        with open(f'/Users/kiks/Documents/awsdocs_proj/jsons/{service}_{guidename}.json', 'r') as f:
+        with open(f'{json_path}/{service}_{guidename}.json', 'r') as f:
             elements_high = json.load(f)
 
         alldocs += len(elements_high)
@@ -228,9 +229,11 @@ if __name__ == '__main__':
 
     GPU_LIMIT = 0.5
 
+    json_path = '/Users/kiks/Documents/awsdocs_proj/jsons' if len(sys.argv)<2 else sys.argv[1]
+
     print("Downloading pre-trained embeddings from tensorflow hub...")
     tf.compat.v1.disable_eager_execution()
-    embed = hub.Module("https://tfhub.dev/google/universal-sentence-encoder/2")
+    embed = hub.Module(model_path)
     text_ph = tf.placeholder(tf.string)
     embeddings = embed(text_ph)
     print("Done.")
@@ -245,7 +248,7 @@ if __name__ == '__main__':
 
     client = Elasticsearch('http://localhost:9200')
 
-    index_texts(client)
+    index_texts(json_path, client)
     # run_query_loop()
 
     print("Closing tensorflow session...")
