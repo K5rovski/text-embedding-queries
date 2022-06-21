@@ -39,3 +39,7 @@ python src/main_query.py
 
 This script should produce a html file inside **data/aws** with the crawled and sorted paragraphs.
 
+# Crawling the docs
+
+The docs where crawled using a jupyter lab notebook, located inside **workspace/**.
+The json crawled files are currently located also in the **workspace/** folder.
